@@ -1,5 +1,54 @@
 <template>
-    <div>我的</div>
+    <div>
+        <div class="header">我的</div>
+        <div class="xiahuaxian"></div>
+        <div class="user">
+            <van-image round width="5rem" height="5rem" style="padding-top:0.5rem;float: left;padding-left:0.5rem;" src="https://img01.yzcdn.cn/vant/cat.jpeg"/>
+            <div class="login">
+                <div class="zong">
+                    <div class="login1">登录</div>
+                    <div class="phone"><van-icon name="graphic" />暂无绑定的手机号</div>
+                </div>
+                <div class="jiantou"><van-icon name="arrow" /></div>
+            </div>
+        </div>
+        <van-row gutter="20" style="margin-top:1rem">
+                <van-col span="8">
+                    <div> <span class="ling">0.00</span> 元</div>
+                    <div>我的金额</div>
+                </van-col>
+                <van-col span="8">
+                    <div><span class="ling">0</span>个</div>
+                    <div>我的优惠</div>
+                </van-col>
+                <van-col span="8">
+                    <div><span class="ling">0</span>分</div>
+                    <div>我的积分</div>
+                </van-col>
+        </van-row>
+        <div class="election">
+            <van-row>
+                <van-col span="2"><van-icon name="label" color="#1989fa" /></van-col>
+                <van-col span="20" style="text-align: left; height:3rem;">我的订单</van-col>
+                <van-col span="2"><van-icon name="arrow" /></van-col>
+            </van-row>
+            <van-row>
+                <van-col span="2"><van-icon name="award" color="#1989fa" /></van-col>
+                <van-col span="20" style="text-align: left; height:3rem;">积分商城</van-col>
+                <van-col span="2"><van-icon name="arrow" /></van-col>
+            </van-row>
+            <van-row>
+                <van-col span="2"><van-icon name="vip-card" color="#1989fa"  /></van-col>
+                <van-col span="20" style="text-align: left; height:3rem;">牛牛外卖会员卡</van-col>
+                <van-col span="2"><van-icon name="arrow" /></van-col>
+            </van-row>
+            <van-row>
+                <van-col span="2"><van-icon name="column" color="#1989fa"  /></van-col>
+                <van-col span="20" style="text-align: left; height:3rem;">服务中心</van-col>
+                <van-col span="2"><van-icon name="arrow" /></van-col>
+            </van-row>
+        </div>
+    </div>
 </template>
 <script>
 export default {
@@ -7,5 +56,68 @@ export default {
 }
 </script>
 <style scoped>
+.header{
+    
+    background-color: #f88323;
+    color: #fff;
+    text-align: center;
+    height: 3rem;
+    line-height: 3rem;
+    font-size: 18px;
+}
+.xiahuaxian{
+    height: 0.5rem;
+    background-color: rgb(250, 174, 59);
+}
+.user{
+    /* position: relative; */
+    background-color: #f88323;
+    color: #fff;
+    height: 6rem;
+    /* line-height: 6rem; */
+    display: flex;
+    /* justify-content: flex-start; */
+    /* align-items: center; */
+}
+.login{
+    flex: 4;
+    display: flex;
+    flex-wrap: wrap;
+}
+.zong{
+    height: 6rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* align-items: center; */
+    padding-left: 1rem;
+    flex: 5;
+}
+.jiantou{
+    flex: 1;
+    text-align: right;
+    padding-right: 1rem;
+    line-height: 6rem;
+}
+.login1{
+    height: 3rem;
+    text-align: left;
+    align-items: flex-end;
+    display: flex;
+}
 
+.phone{
+    height: 3rem;
+    text-align: left;
+    align-items: center;
+
+}
+.ling{
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #f88323;
+}
+.election{
+    margin-top: 2rem;
+}
 </style>
