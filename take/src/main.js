@@ -7,14 +7,9 @@ import Vant from 'vant';
 import 'vant/lib/index.css';
 import store from './store'
 import axios from 'axios'
-<<<<<<< HEAD
-
-
 Vue.prototype.$axios=axios.create({
   baseURL:"http://47.95.13.193:80/takeOutSystem-1.0-SNAPSHOT"
 })
-=======
->>>>>>> 43a09ac69276c6868efb6dffe95aebe6080e27af
 Vue.use(Vant);
 
 Vue.config.productionTip = false

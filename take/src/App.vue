@@ -13,9 +13,6 @@
 import {mapState} from 'vuex';
 export default {
   name: 'App',
-  // components:{
-  //    Tabbar,TabbarItem
-  // },
   computed:{
     ...mapState(['tabs'])
   }
@@ -27,14 +24,9 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-<<<<<<< HEAD
-=======
-  text-align: center;
+  /* text-align: center; */
   color: #2c3e50;
   /* margin-top: 60px; */
-<<<<<<< HEAD
-=======
->>>>>>> wangchao
->>>>>>> 43a09ac69276c6868efb6dffe95aebe6080e27af
+
 }
 </style>
