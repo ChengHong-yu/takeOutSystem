@@ -1,11 +1,6 @@
   <template>
   <div id="app">
-    <van-tabbar style="margin-top:60px" >
-      <van-tabbar-item v-for='(item,index) in tabs' :key='index' replace :to="'/'+item.name"> 
-        <van-icon :name="item.icon" class="van-icon"/>
-        {{item.logo}}
-      </van-tabbar-item>
-    </van-tabbar>
+ 
     <router-view></router-view>
   </div>
 </template>
@@ -14,6 +9,11 @@
 import {mapState} from 'vuex';
 export default {
   name: 'App',
+  data:function(){
+    return{
+      active:0
+    }
+  },
   computed:{
     ...mapState(['tabs'])
   }
