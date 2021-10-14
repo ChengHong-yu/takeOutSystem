@@ -1,5 +1,9 @@
   <template>
   <div id="app">
+<<<<<<< HEAD
+=======
+ 
+>>>>>>> zhanglele
     <router-view></router-view>
   </div>
 </template>
@@ -7,6 +11,17 @@
 <script>
 export default {
   name: 'App',
+<<<<<<< HEAD
+=======
+  data:function(){
+    return{
+      active:0
+    }
+  },
+  computed:{
+    ...mapState(['tabs'])
+  }
+>>>>>>> zhanglele
 }
 </script>
 

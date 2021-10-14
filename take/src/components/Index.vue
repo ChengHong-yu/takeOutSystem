@@ -1,13 +1,13 @@
 <template>
     <div id="app">
-<van-nav-bar class="z" title="山东省淄博市张店区" left-text="登录/注册" >
+<van-nav-bar class="z" @click-left="clickLeft" @click-right="clickRight" title="山东省淄博市张店区" left-text="登录/注册" >
   <template #right>
     <van-icon name="search" size="18" />
   </template>
 </van-nav-bar>
 <!-- ================================== -->
-    <div class="zxc">
-        <div class="zz" v-for="(item,index) in top" :key="index">
+    <div class="zxc" >
+        <div class="zz" v-for="(item,index) in top" :key="index" >
             <img :src="'http://47.95.13.193:80/takeOutSystem-1.0-SNAPSHOT/'+item.photo" alt="" style="width:30px ; height:30px">
             <div style="font-size:14px">{{item.name}}</div>
         </div>
@@ -18,10 +18,10 @@
 </van-cell-group>
 <!-- ======================================商家 -->
 <div  style="margin-bottom:60px">
-<van-card
+<van-card 
  v-for="i in bottom" :key="i.id"
+ @click.native="chufa(i.id)"
   tag='品牌'
-
   :thumb="'http://47.95.13.193:80/takeOutSystem-1.0-SNAPSHOT/'+i.photo"
   
 >
@@ -42,14 +42,23 @@
   </template>
 </van-card>
 </div>
+<!-- ======================================== -->
+   <van-tabbar style="margin-top:60px" v-model="active">
+      <van-tabbar-item  v-for='(item,index) in tabs' :key='index' replace :to="'/'+item.name" :icon="item.icon"> 
+  
+        {{item.logo}}
+      </van-tabbar-item>
+    </van-tabbar>
     </div>
 </template>
 
 <script>
+import {mapState} from 'vuex';
 export default {
   name: "index",
   data: function () {
     return {
+      active:0,
       top: [],
       bottom:[]
     };
@@ -57,21 +66,35 @@ export default {
   created: function () {
   this.tops() ;
   this.bottoms()
+
+  },
+    computed:{
+    ...mapState(['tabs'])
   },
   methods:{
       tops(){
             var that = this;
         this.$axios.post("/biz/queryBigCategory").then(function (res) {
-        console.log(res.data);
+        // console.log(res.data);
         that.top = res.data;
     })
       },
     bottoms(){
           var that = this;
         this.$axios.post("/biz/queryAllShopsInfo").then(function (res) {
-      console.log(res.data);
+      // console.log(res.data);
       that.bottom = res.data;
     });
+    },
+    clickLeft(){
+      this.$router.push('/login')
+    },
+    clickRight(){
+      // console.log(1)
+      this.$router.push('/Search')
+    },
+    chufa(id){
+      this.$router.push('/list/'+id)
     }
   }
 };
@@ -97,7 +120,7 @@ export default {
     font-size: 9px;
 }
 .van-nav-bar__title {
-  color: blue;
+  color: black;
 }
 .zongs .goodsScore{
     color: rgb(236, 116, 17);
