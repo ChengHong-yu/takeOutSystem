@@ -6,7 +6,8 @@
             <van-image round width="5rem" height="5rem" style="padding-top:0.5rem;float: left;padding-left:0.5rem;" src="https://img01.yzcdn.cn/vant/cat.jpeg"/>
             <div class="login">
                 <div class="zong">
-                    <div class="login1">登录</div>
+                    <div class="login1" v-if="isLogined==false"><span @click="login">登录</span><span @click="register">/注册</span></div>
+                    <div class="login1" v-else>{{loginname}}</div>
                     <div class="phone"><van-icon name="graphic" />暂无绑定的手机号</div>
                 </div>
                 <div class="jiantou"><van-icon name="arrow" /></div>
@@ -48,14 +49,44 @@
                 <van-col span="2"><van-icon name="arrow" /></van-col>
             </van-row>
         </div>
+        <van-tabbar style="margin-top:60px" v-model='active'>
+            <van-tabbar-item v-for='(item,index) in tabs' :key='index' replace :icon='item.icon' :to="'/'+item.name"> 
+                {{item.logo}}
+            </van-tabbar-item>
+        </van-tabbar>
     </div>
 </template>
 <script>
+import {mapState} from 'vuex';
 export default {
-    name:'my'
+    name:'my',
+    
+    data:function(){
+        return{
+            loginname:window.sessionStorage.getItem('loginname'),
+            active:3
+        }
+    },
+    computed:{
+        ...mapState(['isLogined','tabs'])
+    },
+    methods:{
+        login(){
+            this.$router.push('/login')
+        },
+        register(){
+            this.$router.push('/register')
+        }
+    }
 }
 </script>
 <style scoped>
+#app{
+    text-align: center;
+}
+.van-row{
+    text-align: center;
+}
 .header{
     
     background-color: #f88323;

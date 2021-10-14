@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- tab切换 -->
-        <van-tabbar style="margin-top:60px" >
+        <van-tabbar style="margin-top:60px" v-model='active'>
             <van-tabbar-item v-for='(item,index) in tabs' :key='index' replace :icon='item.icon' :to="'/'+item.name"> 
                 {{item.logo}}
             </van-tabbar-item>
@@ -37,7 +37,8 @@ export default {
     name:'order',
     data(){
         return {
-            shops:[]
+            shops:[],
+            active:2
         }
     },
     computed:{
@@ -57,11 +58,11 @@ export default {
     },
     created:function(){
         //获取用户id
-        var id=window.localStorage.getItem('loginid');
+        var id=window.sessionStorage.getItem('loginid');
         var that=this;
         //获取用户全部订单
         this.$axios.get('/biz/queryOrdersByUserId?userId='+id).then(function(res){
-            console.log(res.data);
+            // console.log(res.data);
             that.shops=res.data;
         })
     }
