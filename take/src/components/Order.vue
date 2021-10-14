@@ -1,24 +1,92 @@
 <template>
     <div>
+        <!-- tab切换 -->
+        <van-tabbar style="margin-top:60px" >
+            <van-tabbar-item v-for='(item,index) in tabs' :key='index' replace :icon='item.icon' :to="'/'+item.name"> 
+                {{item.logo}}
+            </van-tabbar-item>
+        </van-tabbar>
+        <!-- 订单显示 -->
         <van-nav-bar class="titleBar" title="订单列表"/>
+        <hr>
+        <van-empty description="暂未登录" v-if="!isLogined">
+            <van-button round type="danger" to="my" class="bottom-button">立即登录</van-button>
+        </van-empty>
+        <div v-else>
+            <van-empty description="暂无订单" v-if="shops.length==0">
+            </van-empty>
+            <van-cell-group v-for='(item,index) in shops' :key='index' v-else>
+                <van-cell :title="item.shopName" to='/index' :value='item.roderTime'/>
+                <van-swipe-cell v-for='(aa,ii) in item.list' :key='ii'>
+                    <van-card
+                        :num="aa.buyCount"
+                        :desc="aa.info"
+                        :title="aa.foodName"
+                        class="goods-card"
+                        :thumb="'http://47.95.13.193:80/takeOutSystem-1.0-SNAPSHOT/'+aa.foodPhoto"
+                    />
+                </van-swipe-cell>
+                <button @click="delButton(item.id)" class="delbtn" >删除</button>
+            </van-cell-group>
+        </div>
     </div>
 </template>
 <script>
 import {mapState} from 'vuex';
 export default {
     name:'order',
+    data(){
+        return {
+            shops:[]
+        }
+    },
     computed:{
-        ...mapState(['isLogined','loginname'])
+        ...mapState(['isLogined','loginname','tabs'])
+    },
+    methods:{
+        //删除订单
+        delButton(sid){
+            var that=this;
+            if(confirm('您确定要删除此订单吗？')){
+                this.$axios.get('/biz/deleteOrderByOid?orderId='+sid).then(function(res){
+                    // console.log(res);
+                    that.$router.go(0);
+                })
+            }
+        }
     },
     created:function(){
-        this.$axios.get('/biz/queryOrdersByUserId?userId=1').then(function(res){
-            console.log(res);
+        //获取用户id
+        var id=window.localStorage.getItem('loginid');
+        var that=this;
+        //获取用户全部订单
+        this.$axios.get('/biz/queryOrdersByUserId?userId='+id).then(function(res){
+            console.log(res.data);
+            that.shops=res.data;
         })
     }
 }
 </script>
 <style scoped>
-.titleBar{
-    background-color: #f88323;
+.delbtn{
+   margin-left:350px;
+   background-color: #f57308;
+   color:#fff;
+   border-radius: 5px;
+}
+.van-cell {
+    position: relative;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 10px 16px;
+    overflow: hidden;
+    color: #323233;
+    font-size: 14px;
+    line-height: 24px;
+    font-weight: 500;
+    background-color: #fff;
 }
 </style>
