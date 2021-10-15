@@ -28,7 +28,7 @@
                 </van-col>
         </van-row>
         <div class="election">
-            <van-row>
+            <van-row @click.native="jumpOrder">
                 <van-col span="2"><van-icon name="label" color="#1989fa" /></van-col>
                 <van-col span="20" style="text-align: left; height:3rem;">我的订单</van-col>
                 <van-col span="2"><van-icon name="arrow" /></van-col>
@@ -76,6 +76,9 @@ export default {
         },
         register(){
             this.$router.push('/register')
+        },
+        jumpOrder(){
+            this.$router.push('/order')
         }
     }
 }
