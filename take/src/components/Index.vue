@@ -1,13 +1,16 @@
 <template>
     <div id="app">
-<van-nav-bar class="z" @click-left="clickLeft" @click-right="clickRight" title="山东省淄博市张店区" left-text="登录/注册" >
+<van-nav-bar class="z" @click-left="clickLeft" @click-right="clickRight" title="山东省淄博市张店区"  >
   <template #right>
     <van-icon name="search" size="18" />
+  </template>
+  <template #left>
+    <span v-if="!isLogined" style="color:#1998FB">去登录</span>
   </template>
 </van-nav-bar>
 <!-- ================================== -->
     <div class="zxc" >
-        <div class="zz" v-for="(item,index) in top" :key="index" >
+        <div  class="zz" v-for="(item,index) in top" :key="index" >
             <img :src="'http://47.95.13.193:80/takeOutSystem-1.0-SNAPSHOT/'+item.photo" alt="" style="width:30px ; height:30px">
             <div style="font-size:14px">{{item.name}}</div>
         </div>
@@ -69,7 +72,7 @@ export default {
 
   },
     computed:{
-    ...mapState(['tabs'])
+    ...mapState(['tabs','isLogined'])
   },
   methods:{
       tops(){

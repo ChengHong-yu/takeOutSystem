@@ -1,6 +1,6 @@
 <template >
   <div id="app">
-        <van-nav-bar  class="Y" title="搜索"/>
+        <van-nav-bar   @click-left="onClickLeft"   left-arrow  class="Y" title="搜索"/>
      <form action="">
           <van-search v-model="value"
                 show-action
@@ -36,6 +36,11 @@
   </div>
 </template>
 <script>
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> zhanglele
 export default {
    data() {
     return {
@@ -52,17 +57,31 @@ export default {
                 that.arr=res.data
             })
         },
+<<<<<<< HEAD
         jumpdetails(id){
           // console.log(id);
           this.$router.push('/list/'+id)
         }
+=======
+        onClickLeft(){
+          this.$router.push('/')
+        },
+
+
+      onSearch(){
+          console.log(1);
+      },
+      onCancel(){
+            console.log(2);
+      }
+>>>>>>> zhanglele
   }
   
 }
 </script>
 <style scoped>
    .Y{
-       background-color: #f88323;
+       /* background-color: #5a5a5a; */
    }
    .zongs{
     margin-top: 10px;
