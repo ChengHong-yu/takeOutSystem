@@ -1,6 +1,6 @@
 <template >
   <div id="app">
-        <van-nav-bar  class="Y" title="搜索"/>
+        <van-nav-bar @click-left="onClickLeft"   left-arrow  class="Y" title="搜索"/>
      <form action="">
           <van-search v-model="value"
                 show-action
@@ -45,6 +45,9 @@ export default {
     };
   },
   methods:{
+     onClickLeft(){
+          this.$router.push('/')
+        },
        click:function(){
             var that =this
             this.$axios.get('/biz/queryAllShopsInfoByName?name='+this.value).then(function(res){
@@ -61,9 +64,6 @@ export default {
 }
 </script>
 <style scoped>
-   .Y{
-       background-color: #f88323;
-   }
    .zongs{
     margin-top: 10px;
 }

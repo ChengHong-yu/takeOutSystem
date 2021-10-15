@@ -1,34 +1,46 @@
 <template>
     <div>
-        <!-- tab切换 -->
+
+        <!-- 订单显示 -->
+        <van-nav-bar class="titleBar" title="订单列表" />
+        
+        <van-empty description="暂未登录" v-if="!isLogined">
+            <van-button round type="danger" to="my" class="bottom-button">立即登录</van-button>
+        </van-empty>
+        <div v-else style="margin-bottom:60px">
+            <van-empty description="暂无订单" v-if="shops.length==0">
+            </van-empty>
+            <van-cell-group  v-for='(item,index) in shops' :key='index' v-else>
+                <van-cell to='/index' :value='item.roderTime'>
+                 <template #title>
+                <span style="font-weight:bold">{{item.shopName}}</span>
+                 </template>
+                </van-cell>
+                <van-swipe-cell v-for='(aa,ii) in item.list' :key='ii'>
+                    <van-card
+                        :num="aa.buyCount"
+                        :desc="aa.info"
+                        
+                        class="goods-card"
+                        :thumb="'http://47.95.13.193:80/takeOutSystem-1.0-SNAPSHOT/'+aa.foodPhoto"
+                    >
+                      <template #title>
+                        <span style="font-size:14px;">{{aa.foodName}}</span>
+                       
+                        </template>
+                    </van-card>
+                </van-swipe-cell>
+                <van-button  @click="delButton(item.id)"  class="delbtn" round type="info" size="small">删&nbsp;&nbsp;除</van-button> 
+            
+            </van-cell-group>
+            
+        </div>
+                <!-- tab切换 -->
         <van-tabbar style="margin-top:60px" v-model='active'>
             <van-tabbar-item v-for='(item,index) in tabs' :key='index' replace :icon='item.icon' :to="'/'+item.name"> 
                 {{item.logo}}
             </van-tabbar-item>
         </van-tabbar>
-        <!-- 订单显示 -->
-        <van-nav-bar class="titleBar" title="订单列表"/>
-        <hr>
-        <van-empty description="暂未登录" v-if="!isLogined">
-            <van-button round type="danger" to="my" class="bottom-button">立即登录</van-button>
-        </van-empty>
-        <div v-else>
-            <van-empty description="暂无订单" v-if="shops.length==0">
-            </van-empty>
-            <van-cell-group v-for='(item,index) in shops' :key='index' v-else>
-                <van-cell :title="item.shopName" to='/index' :value='item.roderTime'/>
-                <van-swipe-cell v-for='(aa,ii) in item.list' :key='ii'>
-                    <van-card
-                        :num="aa.buyCount"
-                        :desc="aa.info"
-                        :title="aa.foodName"
-                        class="goods-card"
-                        :thumb="'http://47.95.13.193:80/takeOutSystem-1.0-SNAPSHOT/'+aa.foodPhoto"
-                    />
-                </van-swipe-cell>
-                <button @click="delButton(item.id)" class="delbtn" >删除</button>
-            </van-cell-group>
-        </div>
     </div>
 </template>
 <script>
@@ -62,18 +74,20 @@ export default {
         var that=this;
         //获取用户全部订单
         this.$axios.get('/biz/queryOrdersByUserId?userId='+id).then(function(res){
-            // console.log(res.data);
+            console.log(res.data);
             that.shops=res.data;
         })
     }
 }
 </script>
 <style scoped>
+
 .delbtn{
-   margin-left:350px;
-   background-color: #f57308;
-   color:#fff;
-   border-radius: 5px;
+    /* float: right; */
+ margin: 10px 0;
+  position: relative;
+  left: 84%;
+
 }
 .van-cell {
     position: relative;

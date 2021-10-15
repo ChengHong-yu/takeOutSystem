@@ -1,8 +1,11 @@
 <template>
     <div id="app">
-<van-nav-bar class="z" @click-left="clickLeft" @click-right="clickRight" title="山东省淄博市张店区" left-text="登录/注册" >
+<van-nav-bar class="z" @click-left="clickLeft" @click-right="clickRight" title="山东省淄博市张店区..."  >
   <template #right>
     <van-icon name="search" size="18" />
+  </template>
+   <template #left>
+    <span v-if="!isLogined" style="color:#1998FB">去登录</span>
   </template>
 </van-nav-bar>
 <!-- ================================== -->
@@ -68,7 +71,7 @@ export default {
 
   },
     computed:{
-    ...mapState(['tabs'])
+    ...mapState(['tabs','isLogined'])
   },
   methods:{
     tops(){
