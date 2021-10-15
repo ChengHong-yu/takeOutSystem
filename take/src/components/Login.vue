@@ -34,7 +34,7 @@ export default {
                 that.mutationIsLogined();
                 that.mutationLoginname(res.data.name);
                 that.mutationAuthorid(res.id);
-                window.sessionStorage.setItem('loginStatus',true);
+                window.localStorage.setItem('loginStatus',true);
                 window.sessionStorage.setItem('loginname',res.data.name);
                 window.sessionStorage.setItem('loginid',res.data.id);
                 window.sessionStorage.setItem('account',that.account);

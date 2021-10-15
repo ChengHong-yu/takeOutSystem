@@ -4,18 +4,11 @@
 </template>
 
 <script>
-import {mapMutations} from 'vuex'
 export default {
   name: 'App',
-  mounted(){
-    var loginStatus = window.sessionStorage.getItem('loginStatus');
-    // console.log(loginStatus);
-    if(loginStatus){
-      this.mutationIsLogined();
+  data:function(){
+    return{
     }
-  },
-  methods:{
-    ...mapMutations(['mutationIsLogined']),
   }
 }
 </script>

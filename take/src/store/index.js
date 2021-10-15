@@ -11,7 +11,12 @@ const store = new Vuex.Store({
         ],
         isLogined: false, //登录状态，默认false
         loginname: '',
-        authorid: '' //登录id
+        authorid: '' ,//登录id
+        tab22:[
+            {id:1,name:'点餐'},
+            {id:2,name:'评价'},
+            {id:3,name:'商家'}
+        ]
 
     },
     getters: {},

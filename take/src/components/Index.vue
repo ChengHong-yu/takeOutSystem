@@ -1,16 +1,13 @@
 <template>
     <div id="app">
-<van-nav-bar class="z" @click-left="clickLeft" @click-right="clickRight" title="山东省淄博市张店区"  >
+<van-nav-bar class="z" @click-left="clickLeft" @click-right="clickRight" title="山东省淄博市张店区" left-text="登录/注册" >
   <template #right>
     <van-icon name="search" size="18" />
-  </template>
-  <template #left>
-    <span v-if="!isLogined" style="color:#1998FB">去登录</span>
   </template>
 </van-nav-bar>
 <!-- ================================== -->
     <div class="zxc" >
-        <div  class="zz" v-for="(item,index) in top" :key="index" >
+        <div class="zz" v-for="(item,index) in top" :key="index" >
             <img :src="'http://47.95.13.193:80/takeOutSystem-1.0-SNAPSHOT/'+item.photo" alt="" style="width:30px ; height:30px">
             <div style="font-size:14px">{{item.name}}</div>
         </div>
@@ -48,7 +45,6 @@
 <!-- ======================================== -->
    <van-tabbar style="margin-top:60px" v-model="active">
       <van-tabbar-item  v-for='(item,index) in tabs' :key='index' replace :to="'/'+item.name" :icon="item.icon"> 
-  
         {{item.logo}}
       </van-tabbar-item>
     </van-tabbar>
@@ -72,22 +68,22 @@ export default {
 
   },
     computed:{
-    ...mapState(['tabs','isLogined'])
+    ...mapState(['tabs'])
   },
   methods:{
-      tops(){
-            var that = this;
+    tops(){
+        var that = this;
         this.$axios.post("/biz/queryBigCategory").then(function (res) {
-        // console.log(res.data);
-        that.top = res.data;
-    })
-      },
+          // console.log(res.data);
+          that.top = res.data;
+        })
+    },
     bottoms(){
-          var that = this;
-        this.$axios.post("/biz/queryAllShopsInfo").then(function (res) {
-      // console.log(res.data);
-      that.bottom = res.data;
-    });
+      var that = this;
+      this.$axios.post("/biz/queryAllShopsInfo").then(function (res) {
+        // console.log(res.data);
+        that.bottom = res.data;
+      });
     },
     clickLeft(){
       this.$router.push('/login')
@@ -96,6 +92,7 @@ export default {
       // console.log(1)
       this.$router.push('/Search')
     },
+    //商家详细信息
     chufa(id){
       this.$router.push('/list/'+id)
     }

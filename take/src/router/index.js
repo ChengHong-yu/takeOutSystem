@@ -6,7 +6,10 @@ import Search from '@/components/Search.vue';
 import My from '@/components/My.vue';
 import Login from '@/components/Login.vue';
 import Register from '@/components/Register.vue'
-import List from '../components/List.vue'
+import List from '@/components/List.vue'
+
+
+
 Vue.use(Router)
 
 export default new Router({
@@ -20,8 +23,7 @@ export default new Router({
         { path: '/search', component: Search },
         { path: '/my', component: My },
         { path: '/login', component: Login },
-        { path: '/list/:id', component: List },
-
-        { path: '/register', component: Register }
+        { path: '/register', component: Register },
+        { path: '/list/:id', component: List ,props:true}
     ]
 })
