@@ -1,6 +1,6 @@
 <template >
   <div id="app">
-        <van-nav-bar  class="Y" title="搜索"/>
+        <van-nav-bar   @click-left="onClickLeft"   left-arrow  class="Y" title="搜索"/>
      <form action="">
           <van-search 
                 show-action
@@ -27,7 +27,6 @@
 </template>
 <script>
 
-import { Toast } from 'vant';
 
 export default {
    data() {
@@ -45,7 +44,9 @@ export default {
                 that.arr=res.data
             })
         },
-
+        onClickLeft(){
+          this.$router.push('/')
+        },
 
 
       onSearch(){
@@ -60,7 +61,7 @@ export default {
 </script>
 <style scoped>
    .Y{
-       background-color: #f88323;
+       /* background-color: #5a5a5a; */
    }
 </style>
 
