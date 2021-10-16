@@ -2,8 +2,9 @@
   <div id="app">
     {{bigId}}
         <van-nav-bar @click-left="onClickLeft"   left-arrow  class="Y" title="搜索"/>
-     <form action="">
+     <form action="/">
           <van-search v-model="value"
+            @search="click"
                 show-action
                 placeholder="请输入商家或美食名称">
              <template #action>

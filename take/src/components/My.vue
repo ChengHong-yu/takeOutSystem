@@ -1,7 +1,8 @@
 <template>
     <div>
         <div class="header">我的</div>
-        <div class="xiahuaxian"></div>
+        <div class="van-hairline--bottom"></div>
+        <!-- <div class="xiahuaxian"></div> -->
         <div class="user">
             <van-image round width="5rem" height="5rem" style="padding-top:0.5rem;float: left;padding-left:0.5rem;" src="https://pic.quanjing.com/9s/9v/QJ6949752852.jpg?x-oss-process=style/794ws"/>
             <div class="login">
@@ -92,26 +93,24 @@ export default {
 }
 .header{
     
-    background-color: #f88323;
+    background-color: #1989FA;
     color: #fff;
     text-align: center;
     height: 3rem;
     line-height: 3rem;
     font-size: 18px;
 }
-.xiahuaxian{
+/* .xiahuaxian{
     height: 0.5rem;
     background-color: rgb(250, 174, 59);
-}
+} */
 .user{
     /* position: relative; */
-    background-color: #f88323;
+    background-color: #1989FA;
     color: #fff;
     height: 6rem;
     /* line-height: 6rem; */
     display: flex;
-    /* justify-content: flex-start; */
-    /* align-items: center; */
 }
 .login{
     flex: 4;
