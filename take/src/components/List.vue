@@ -3,17 +3,20 @@
         <!-- 头部标题信息 -->
         <div class='headDiv'>
             <!-- 标题 -->
-            <van-nav-bar :title="shop.name" left-arrow @click-left="onClickLeft"/>
-            <p>
+            <van-nav-bar id="zsz" left-arrow @click-left="onClickLeft"/>
+            <div class="top-img"><img  :src="'http://47.95.13.193:80/takeOutSystem-1.0-SNAPSHOT/'+shop.photo" alt=""></div>
+              <div style="font-weight:bold;font-size:16px; text-align:center"> <van-tag size='medium' text-color=black color="#FCE33B">品牌</van-tag> {{shop.name}}</div>
+            <p class="neirong">
                 <span>{{shop.score}}</span>
                 <span>月售{{shop.sales}}单</span>
                 <span>硅谷专送</span>
                 <span>约{{shop.deliveryTime}}分钟</span>
                 <span>距离{{shop.distance}}m</span>
             </p>
-            <p>新用户下单立减17元（不与其他活动同时使用）<span>优惠</span></p>
-            <hr>
+            <p class="neirong2"><van-tag type="success">优惠</van-tag> 新用户下单立减17元（不与其他活动同时使用）<span>6优惠</span></p>
+            
         </div>
+        <div class="van-hairline--bottom"></div>
         <!-- tab切换 -->
         <van-tabs>
             <van-tab v-for="(item,index) in tab22" :title="item.name" :key='index'>
@@ -72,6 +75,7 @@ export default {
    data:function(){
        return{
            shop:{},
+           //分类
            fenLei:[],
            active:0,
            activeIndex:0,
@@ -128,10 +132,35 @@ export default {
 }
 </script>
 <style scoped>
+#zsz {
+   background:url('https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2F7%2F584260a8b8615.jpg%3Fdown&refer=http%3A%2F%2Fpic1.win4000.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1636963117&t=ebea508b9443995cd2708154d7dd4478/assets/logo.png') no-repeat ;
+}
 .headDiv{
     position: relative;
 }
 .headDiv>p{
    text-align: center;
+}
+/* ================头部布局 */
+.top-img{
+    width: 70px;
+    height: 60px;
+    margin: 0 auto;
+    position: relative;
+}
+.top-img img{
+    width: 100%;
+    height: 100%;
+    border-radius: 6px;
+    box-shadow: 5px 5px 5px rgb(110, 110, 110);
+    position: absolute;
+    top: -30px;
+    z-index: 99;
+}
+.neirong span{
+    font-size: 11px;
+}
+.neirong2{
+    font-size: 11px;
 }
 </style>
