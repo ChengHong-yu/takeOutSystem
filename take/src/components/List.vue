@@ -223,7 +223,7 @@ export default {
 .headDiv>p{
    text-align: center;
 }
-<<<<<<< HEAD
+
 .header{
     display: flex;
     
@@ -266,7 +266,7 @@ export default {
     display: flex;
     flex-direction: column;
     padding-top: 15px;
-=======
+}
 /* ================头部布局 */
 .top-img{
     width: 70px;
@@ -288,6 +288,6 @@ export default {
 }
 .neirong2{
     font-size: 11px;
->>>>>>> zhanglele
+
 }
 </style>
