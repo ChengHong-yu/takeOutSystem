@@ -28,7 +28,38 @@
                     <div>购物车</div>
                 </div>
                 <div v-if='index==1'>评价</div>
-                <div v-if='index==2'>商家</div>
+                <div v-if='index==2'>
+                    <van-cell  size="large"  >
+                         <template #title>
+                              <span style="font-weight:bold">配送信息</span>
+                            </template>
+                                 <template #label>
+                              <van-tag type="success">牛牛专送</van-tag> 
+                              <span style="font-size:9px">由商家提供配送，约{{shop.deliveryTime}}分钟送达，距离{{shop.distance}}米</span>
+                              <div style="margin-top:10px;font-size:9px">配送费{{shop.transportationPrice}}元</div>
+                            </template>
+                            
+                    </van-cell>
+                        <div class="van-hairline--top"></div>
+                        <van-cell-group>   
+                        <van-cell  border >
+                           
+                            <template #default>
+                                <h4>活动与服务</h4>
+                                <div v-for="z in youhuis" :key="z.shopId">
+                                <div v-if="z.tag==='首单'"  >
+                                 <van-tag type="success">首单</van-tag> 
+                                <span>{{z.contents}}</span>
+                                </div>
+                                <div v-if="z.tag==='特价'">
+                                 <van-tag type="warning">特价</van-tag> 
+                                <span>{{z.contents}}</span>
+                                </div>
+                                </div>
+                            </template>
+                        </van-cell>
+                        </van-cell-group>
+                    </div>
             </van-tab>
         </van-tabs>
     </div>
@@ -43,7 +74,9 @@ export default {
            shop:{},
            fenLei:[],
            active:0,
-           activeIndex:0
+           activeIndex:0,
+           //优惠
+           youhuis:[]
        }
    },
    computed:{
@@ -52,6 +85,7 @@ export default {
    created:function(){
        this.shujv(this.id);
        this.fenlei(this.id);
+       this.youhui(this.id)
        
    }, 
    methods:{
@@ -81,7 +115,15 @@ export default {
                that.fenLei=he;
 
            })
-        }  
+        },
+        // 商家优惠信息
+        youhui(id){
+            var that =this
+            this.$axios.post('/biz/querySpecialOfferByShopId?shopId='+id).then(function(res){
+                    console.log(res.data)
+                    that.youhuis=res.data
+            })
+        }
    }
 }
 </script>

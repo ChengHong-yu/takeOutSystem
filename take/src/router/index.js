@@ -20,7 +20,7 @@ export default new Router({
         },
         { path: '/index', component: Index },
         { path: '/order', component: Order },
-        { path: '/search', component: Search },
+        { path: '/search/:bigId', component: Search,props:true},
         { path: '/my', component: My },
         { path: '/login', component: Login },
         { path: '/register', component: Register },

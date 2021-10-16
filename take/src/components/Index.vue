@@ -10,7 +10,7 @@
 </van-nav-bar>
 <!-- ================================== -->
     <div class="zxc" >
-        <div class="zz" v-for="(item,index) in top" :key="index" >
+        <div class="zz" v-for="(item,index) in top" :key="index"  @click="bigCate(item.id)">
             <img :src="'http://47.95.13.193:80/takeOutSystem-1.0-SNAPSHOT/'+item.photo" alt="" style="width:30px ; height:30px">
             <div style="font-size:14px">{{item.name}}</div>
         </div>
@@ -74,6 +74,7 @@ export default {
     ...mapState(['tabs','isLogined'])
   },
   methods:{
+    //头部数据
     tops(){
         var that = this;
         this.$axios.post("/biz/queryBigCategory").then(function (res) {
@@ -81,6 +82,7 @@ export default {
           that.top = res.data;
         })
     },
+    //底部数据
     bottoms(){
       var that = this;
       this.$axios.post("/biz/queryAllShopsInfo").then(function (res) {
@@ -91,13 +93,20 @@ export default {
     clickLeft(){
       this.$router.push('/login')
     },
+    //点击右侧搜索按钮
     clickRight(){
-      // console.log(1)
+      
       this.$router.push('/Search')
     },
     //商家详细信息
     chufa(id){
+      // console.log(id)
       this.$router.push('/list/'+id)
+    },
+    //点击大分类跳转
+    bigCate(uid){
+      this.$router.push('/Search/'+uid)
+
     }
   }
 };
