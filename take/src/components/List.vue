@@ -27,7 +27,68 @@
                     </van-tree-select>
                     <div>购物车</div>
                 </div>
-                <div v-if='index==1'>评价</div>
+                <div v-if='index==1'>
+                    <div class="header">
+                        <div class="left">
+                            <span style="font-size:1.5rem;font-weight: 600;color: #f88323;">{{shop.score}}</span>
+                            <strong style="margin:10px 0;">综合评分</strong>
+                            <span>高于周边商家69.2%</span>
+                        </div>
+                        <div class="right">
+                            <span>服务态度：<van-rate v-model="serviceScore" readonly /><span style="color: #f88323;margin-left:5px;">{{serviceScore}}</span></span>
+                            <span style="margin:10px 0;">商品评分：<van-rate v-model="goodsScore" readonly /><span style="color: #f88323;margin-left:5px;">{{goodsScore}}</span></span>
+                            <span style="padding-left:10px; width: 100%;text-align: left;">送到时间：{{shop.deliveryTime}}</span>
+                        </div>
+                    </div>
+                    <div class="geli"></div>
+                    <div class="pingjia">
+                        <van-tabs type="card" color='#f88323'>
+                            <van-tab title="全部">
+                                <div class="pinglun" v-for="(item,index) in evaluates" :key="index">
+                                    <div class="pleft">
+                                        <van-image width="30" round height="30" src="https://img01.yzcdn.cn/vant/cat.jpeg"/>
+                                    </div>
+                                    <div class="pright">
+                                        <span>{{item.account}}</span>
+                                        <van-rate v-model="score" readonly />
+                                        <span>{{item.comments}}</span>
+                                        <span class="shijian" style="text-align:right;color:#999;margin-right:10px;">{{item.oederTime}}</span>
+                                    </div>
+                                </div>
+                            </van-tab>
+                            <van-tab title="满意">
+                                <div  v-for="(item,index) in evaluates" :key="index" >
+                                    <div class="pinglun" v-if="item.isGood==1">
+                                        <div class="pleft">
+                                            <van-image width="30" round height="30" src="https://img01.yzcdn.cn/vant/cat.jpeg"/>
+                                        </div>
+                                        <div class="pright">
+                                            <span>{{item.account}}</span>
+                                            <van-rate v-model="score" readonly />
+                                            <span>{{item.comments}}</span>
+                                            <span class="shijian" style="text-align:right;color:#999;margin-right:10px;">{{item.oederTime}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </van-tab>
+                            <van-tab title="不满意">
+                                <div  v-for="(item,index) in evaluates" :key="index" >
+                                    <div class="pinglun" v-if="item.isGood==0">
+                                        <div class="pleft">
+                                            <van-image width="30" round height="30" src="https://img01.yzcdn.cn/vant/cat.jpeg"/>
+                                        </div>
+                                        <div class="pright">
+                                            <span>{{item.account}}</span>
+                                            <van-rate v-model="score" readonly />
+                                            <span>{{item.comments}}</span>
+                                            <span class="shijian" style="text-align:right;color:#999;margin-right:10px;">{{item.oederTime}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </van-tab>
+                        </van-tabs>
+                    </div>
+                </div>
                 <div v-if='index==2'>
                     <van-cell  size="large"  >
                          <template #title>
@@ -76,7 +137,15 @@ export default {
            active:0,
            activeIndex:0,
            //优惠
-           youhuis:[]
+           youhuis:[],
+           //评价
+           evaluates:[],
+           //服务态度
+           serviceScore:'',
+           //商品评分
+           goodsScore:'',
+           //用户分数
+           score:4
        }
    },
    computed:{
@@ -85,16 +154,29 @@ export default {
    created:function(){
        this.shujv(this.id);
        this.fenlei(this.id);
-       this.youhui(this.id)
+       this.youhui(this.id);
+       this.evaluate(this.id);
        
    }, 
    methods:{
+       //获取评价信息
+       evaluate(id){
+           var that=this;
+           this.$axios.get('/biz//queryCommentByShopId?shopId='+id).then(function(res){
+               console.log(res.data);
+            that.evaluates=res.data;
+            console.log(res.data.score);
+            // that.score=splice(res.data.score,1);
+           })
+       },
        //商家基本信息数据
        shujv(id){
            var that=this;
            this.$axios.get('/biz//queryInfoByShopId?shopId='+id).then(function(res){
-            //    console.log(res.data);
+               console.log(res.data);
                that.shop=res.data;
+               that.serviceScore=res.data.serviceScore;
+               that.goodsScore=res.data.goodsScore;
            })
        },
        onClickLeft(){
@@ -105,7 +187,7 @@ export default {
             var that=this;
             var he=[]
            this.$axios.get("/biz/queryFoodCategory?id="+id).then(function(res){
-               console.log(res.data.length);
+            //    console.log(res.data.length);
                 for(let i=0;i<res.data.length;i++){
                     console.log()
                     var z={text:res.data[i].name}
@@ -120,7 +202,7 @@ export default {
         youhui(id){
             var that =this
             this.$axios.post('/biz/querySpecialOfferByShopId?shopId='+id).then(function(res){
-                    console.log(res.data)
+                    // console.log(res.data)
                     that.youhuis=res.data
             })
         }
@@ -133,5 +215,48 @@ export default {
 }
 .headDiv>p{
    text-align: center;
+}
+.header{
+    display: flex;
+    
+}
+.left{
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 10px;
+    font-size: 0.5em;
+}
+.right{
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 10px;
+    font-size: 0.5em;
+}
+.geli{
+    width: 100%;
+    height: 1rem;
+    background-color: rgb(233, 233, 233);
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+
+}
+.pinglun{
+    display: flex;
+}
+.pleft{
+    padding: 15px 0 0 15px;
+    flex: 1;
+}
+.pright{
+    flex: 6;
+    display: flex;
+    flex-direction: column;
+    padding-top: 15px;
 }
 </style>

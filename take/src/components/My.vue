@@ -3,7 +3,7 @@
         <div class="header">我的</div>
         <div class="xiahuaxian"></div>
         <div class="user">
-            <van-image round width="5rem" height="5rem" style="padding-top:0.5rem;float: left;padding-left:0.5rem;" src="https://img01.yzcdn.cn/vant/cat.jpeg"/>
+            <van-image round width="5rem" height="5rem" style="padding-top:0.5rem;float: left;padding-left:0.5rem;" src="https://pic.quanjing.com/9s/9v/QJ6949752852.jpg?x-oss-process=style/794ws"/>
             <div class="login">
                 <div class="zong">
                     <div class="login1" v-if="isLogined==false"><span @click="login">登录</span><span @click="register">/注册</span></div>
@@ -15,20 +15,20 @@
         </div>
         <van-row gutter="20" style="margin-top:1rem">
                 <van-col span="8">
-                    <div> <span class="ling">0.00</span> 元</div>
+                    <div> <span class="ling">0.99</span> 元</div>
                     <div>我的金额</div>
                 </van-col>
                 <van-col span="8">
-                    <div><span class="ling">0</span>个</div>
+                    <div><span class="ling">22</span>个</div>
                     <div>我的优惠</div>
                 </van-col>
                 <van-col span="8">
-                    <div><span class="ling">0</span>分</div>
+                    <div><span class="ling">2</span>分</div>
                     <div>我的积分</div>
                 </van-col>
         </van-row>
         <div class="election">
-            <van-row>
+            <van-row @click.native="jumplist">
                 <van-col span="2"><van-icon name="label" color="#1989fa" /></van-col>
                 <van-col span="20" style="text-align: left; height:3rem;">我的订单</van-col>
                 <van-col span="2"><van-icon name="arrow" /></van-col>
@@ -76,6 +76,9 @@ export default {
         },
         register(){
             this.$router.push('/register')
+        },
+        jumplist(){
+            this.$router.push('/order')
         }
     }
 }
