@@ -17,18 +17,27 @@
         <!-- tab切换 -->
         <van-tabs>
             <van-tab v-for="(item,index) in tab22" :title="item.name" :key='index'>
-                <div v-if='index==0'>
+                <div v-if='index==0' class="shopAll">
                     <!-- 分类 -->
                     <van-tree-select :items="fenLei" height="100%" :main-active-index.sync="active" @click-nav='aa' @click.native='dtl'>
                         <template #content>
                             <ul>
                                 <li v-for='(s,i) in shops' :key='i'>
-                                    <a href="">{{s.name}}</a>
+                                    <img :src="'http://47.95.13.193:80/takeOutSystem-1.0-SNAPSHOT/'+s.photo">
+                                    <a><b>{{s.name}}</b></a>
+                                    <button @click='shopCount()'><a>-</a></button>
+                                    <span>0</span>
+                                    <button>+</button>
                                 </li>
                             </ul>
                         </template>
                     </van-tree-select>
-                    <div>购物车</div>
+                    <div class='shopCar'>
+                        <div>
+                            <button>购物车</button>
+                            <button @click="jieSuan()">结算</button>
+                        </div>
+                    </div>
                 </div>
                 <!-- 评价 -->
                 <div v-if='index==1'>评价</div>
@@ -143,7 +152,7 @@ export default {
             var that=this;
             this.$axios.get('biz/queryFoodinfoByShopIdAndFoodCategoryId?shopId='+id+'&foodcategoryId='+sid)
             .then(function(res){
-                // console.log(res.data);
+                console.log(res.data);
                 that.shops=res.data;
             })
         },
@@ -172,5 +181,20 @@ export default {
 .chyactive{
     background-color: floralwhite;
     border-left: red;
+}
+img{
+    width:40%;
+    height:40%;
+}
+.shopAll{
+    position: relative;
+}
+.shopCar{
+    position: fixed;
+    bottom:0px;
+    width:100%;
+    height:40px;
+    background-color: rgb(110, 109, 109);
+    border-radius: 10px;
 }
 </style>

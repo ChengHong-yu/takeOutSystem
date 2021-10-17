@@ -17,7 +17,8 @@ const store = new Vuex.Store({
             {id:2,name:'评价'},
             {id:3,name:'商家'}
         ],
-        tid:0
+        tid:0,
+        sCount:0
 
     },
     getters: {},
@@ -41,6 +42,11 @@ const store = new Vuex.Store({
             state.tid = payload;
 
         },
+        //修改商品数据
+        mutationsCount: function(state, payload) {
+            state.sCount = payload;
+
+        }
     },
     actions: {}
 });
