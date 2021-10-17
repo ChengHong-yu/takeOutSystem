@@ -169,7 +169,7 @@ export default {
            this.$axios.get('/biz//queryCommentByShopId?shopId='+id).then(function(res){
                console.log(res.data);
             that.evaluates=res.data;
-            console.log(res.data.score);
+            // console.log(res.data.score);
             // that.score=splice(res.data.score,1);
            })
        },
@@ -209,7 +209,8 @@ export default {
                     // console.log(res.data)
                     that.youhuis=res.data
             })
-        }
+        },
+      
    }
 }
 </script>

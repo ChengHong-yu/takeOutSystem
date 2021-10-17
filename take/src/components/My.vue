@@ -1,8 +1,8 @@
 <template>
     <div>
-        <div class="header">我的</div>
-        <div class="van-hairline--bottom"></div>
-        <!-- <div class="xiahuaxian"></div> -->
+        <div class="header">个人中心</div>
+        <div style="margin-bottom:10px" class="van-hairline--bottom"></div>
+    
         <div class="user">
             <van-image round width="5rem" height="5rem" style="padding-top:0.5rem;float: left;padding-left:0.5rem;" src="https://pic.quanjing.com/9s/9v/QJ6949752852.jpg?x-oss-process=style/794ws"/>
             <div class="login">
@@ -14,7 +14,7 @@
                 <div class="jiantou"><van-icon name="arrow" /></div>
             </div>
         </div>
-        <van-row gutter="20" style="margin-top:1rem">
+        <van-row class="botooms" gutter="20" style="margin-top:1rem">
                 <van-col span="8">
                     <div> <span class="ling">0.99</span> 元</div>
                     <div>我的金额</div>
@@ -92,24 +92,20 @@ export default {
     text-align: center;
 }
 .header{
-    
-    background-color: #1989FA;
-    color: #fff;
+    color: #000;
     text-align: center;
     height: 3rem;
     line-height: 3rem;
     font-size: 18px;
 }
-/* .xiahuaxian{
-    height: 0.5rem;
-    background-color: rgb(250, 174, 59);
-} */
 .user{
-    /* position: relative; */
+    /* margin-top: 22px; */
+    border-radius: 8px;
+    margin: 0 10px;
     background-color: #1989FA;
     color: #fff;
     height: 6rem;
-    /* line-height: 6rem; */
+    box-shadow: 3px 5px 3px rgb(175, 174, 174);
     display: flex;
 }
 .login{
@@ -122,7 +118,6 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    /* align-items: center; */
     padding-left: 1rem;
     flex: 5;
 }
@@ -152,5 +147,17 @@ export default {
 }
 .election{
     margin-top: 2rem;
+    padding: 0 10px;
+}
+.zong div{
+    padding: 5px 0;
+    
+}
+.botooms{
+    box-shadow: 3px 3px 3px rgb(223, 223, 223);
+    border-radius: 8px;
+    padding: 10px 0;
+    margin: 0 10px;
+    background-color: #F8F9F9;
 }
 </style>
