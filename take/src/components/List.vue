@@ -105,6 +105,7 @@
                         </van-tabs>
                     </div>
                 </div>
+                <!-- 商家优惠信息 -->
                 <div v-if='index==2'>
                     <van-cell  size="large"  >
                          <template #title>

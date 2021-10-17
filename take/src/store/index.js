@@ -30,12 +30,10 @@ const store = new Vuex.Store({
         //修改登录名
         mutationLoginname: function(state, payload) {
             state.loginname = payload;
-
         },
         //修改登录id
         mutationAuthorid: function(state, payload) {
             state.authorid = payload;
-
         },
        //修改分类id
        mutationTid: function(state, payload) {
@@ -45,7 +43,6 @@ const store = new Vuex.Store({
         //修改商品数据
         mutationsCount: function(state, payload) {
             state.sCount = payload;
-
         }
     },
     actions: {}
