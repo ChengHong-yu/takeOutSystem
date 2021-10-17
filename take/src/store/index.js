@@ -37,9 +37,9 @@ const store = new Vuex.Store({
             state.authorid = payload;
 
         },
-        //修改分类id
-        mutationTid: function(state, payload) {
-            state.tid = payload;
+       //修改分类id
+       mutationTid: function(state, payload) {
+        state.tid = payload;
 
         },
         //修改商品数据
