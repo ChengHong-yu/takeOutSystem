@@ -106,7 +106,20 @@ export default {
        
    }, 
    methods:{
+<<<<<<< HEAD
        ...mapMutations(['mutationTid']),
+=======
+       //获取评价信息
+       evaluate(id){
+           var that=this;
+           this.$axios.get('/biz//queryCommentByShopId?shopId='+id).then(function(res){
+               console.log(res.data);
+            that.evaluates=res.data;
+            // console.log(res.data.score);
+            // that.score=splice(res.data.score,1);
+           })
+       },
+>>>>>>> zhanglele
        //商家基本信息数据
        shujv(id){
            var that=this;
@@ -143,6 +156,7 @@ export default {
                     that.youhuis=res.data
             })
         },
+<<<<<<< HEAD
         //分类点击下标
         aa(id){
             this.mutationTid(id);
@@ -161,6 +175,9 @@ export default {
              this.details(this.id,this.tid)//获取到的为第一个？？？
         }
 
+=======
+      
+>>>>>>> zhanglele
    }
 }
 </script>
