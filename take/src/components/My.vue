@@ -1,10 +1,9 @@
 <template>
     <div>
         <div class="header">我的</div>
-        <div class="van-hairline--bottom"></div>
-        <!-- <div class="xiahuaxian"></div> -->
+        <div class="xiahuaxian"></div>
         <div class="user">
-            <van-image round width="5rem" height="5rem" style="padding-top:0.5rem;float: left;padding-left:0.5rem;" src="https://pic.quanjing.com/9s/9v/QJ6949752852.jpg?x-oss-process=style/794ws"/>
+            <van-image round width="5rem" height="5rem" style="padding-top:0.5rem;float: left;padding-left:0.5rem;" src="https://img01.yzcdn.cn/vant/cat.jpeg"/>
             <div class="login">
                 <div class="zong">
                     <div class="login1" v-if="isLogined==false"><span @click="login">登录</span><span @click="register">/注册</span></div>
@@ -16,20 +15,20 @@
         </div>
         <van-row gutter="20" style="margin-top:1rem">
                 <van-col span="8">
-                    <div> <span class="ling">0.99</span> 元</div>
+                    <div> <span class="ling">0.00</span> 元</div>
                     <div>我的金额</div>
                 </van-col>
                 <van-col span="8">
-                    <div><span class="ling">22</span>个</div>
+                    <div><span class="ling">0</span>个</div>
                     <div>我的优惠</div>
                 </van-col>
                 <van-col span="8">
-                    <div><span class="ling">2</span>分</div>
+                    <div><span class="ling">0</span>分</div>
                     <div>我的积分</div>
                 </van-col>
         </van-row>
         <div class="election">
-            <van-row @click.native="jumplist">
+            <van-row>
                 <van-col span="2"><van-icon name="label" color="#1989fa" /></van-col>
                 <van-col span="20" style="text-align: left; height:3rem;">我的订单</van-col>
                 <van-col span="2"><van-icon name="arrow" /></van-col>
@@ -77,9 +76,6 @@ export default {
         },
         register(){
             this.$router.push('/register')
-        },
-        jumplist(){
-            this.$router.push('/order')
         }
     }
 }
@@ -93,24 +89,26 @@ export default {
 }
 .header{
     
-    background-color: #1989FA;
+    background-color: #f88323;
     color: #fff;
     text-align: center;
     height: 3rem;
     line-height: 3rem;
     font-size: 18px;
 }
-/* .xiahuaxian{
+.xiahuaxian{
     height: 0.5rem;
     background-color: rgb(250, 174, 59);
-} */
+}
 .user{
     /* position: relative; */
-    background-color: #1989FA;
+    background-color: #f88323;
     color: #fff;
     height: 6rem;
     /* line-height: 6rem; */
     display: flex;
+    /* justify-content: flex-start; */
+    /* align-items: center; */
 }
 .login{
     flex: 4;

@@ -16,7 +16,8 @@ const store = new Vuex.Store({
             {id:1,name:'点餐'},
             {id:2,name:'评价'},
             {id:3,name:'商家'}
-        ]
+        ],
+        tid:0
 
     },
     getters: {},
@@ -33,6 +34,11 @@ const store = new Vuex.Store({
         //修改登录id
         mutationAuthorid: function(state, payload) {
             state.authorid = payload;
+
+        },
+        //修改分类id
+        mutationTid: function(state, payload) {
+            state.tid = payload;
 
         },
     },

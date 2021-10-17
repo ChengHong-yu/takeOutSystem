@@ -105,7 +105,7 @@ export default {
     },
     //点击大分类跳转
     bigCate(uid){
-      this.$router.push('/new/'+uid)
+      this.$router.push('/Search/'+uid)
 
     }
   }
