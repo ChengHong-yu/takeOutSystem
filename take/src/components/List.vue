@@ -22,15 +22,20 @@
             <van-tab v-for="(item,index) in tab22" :title="item.name" :key='index'>
                 <div v-if='index==0' class="shopAll">
                     <!-- 分类 -->
-                    <van-tree-select :items="fenLei" height="100%" :main-active-index.sync="active" @click-nav='aa' @click.native='dtl'>
-                        <template #content>
-                            <ul>
-                                <li v-for='(s,i) in shops' :key='i'>
+                    <van-tree-select :items="fenLei" height="100%" :main-active-index.sync="active" @click-nav='aa'  @click.native='dtl'>
+                        <template #content >
+                            <ul >
+                                <li v-for='(s,i) in shops' :key='i'  @click='bb(s.id)'>
                                     <img :src="'http://47.95.13.193:80/takeOutSystem-1.0-SNAPSHOT/'+s.photo">
                                     <a><b>{{s.name}}</b></a>
-                                    <button @click='shopCount()'><a>-</a></button>
-                                    <span>0</span>
-                                    <button>+</button>
+                                    <div>
+                                        <!-- <span v-if=''>
+                                            <button @click='shopCount($event)'><a data-a='-'>-</a></button>
+                                            <span>{{buyCount}}</span>
+                                        </span> -->
+                                        <button @click='shopCount(s.id,$event)'><a data-a='+'>+</a></button>
+                                    </div>
+                                    <!-- <van-stepper v-model="value" theme="round" button-size="22" disable-input /> -->
                                 </li>
                             </ul>
                         </template>
@@ -164,7 +169,12 @@ export default {
            goodsScore:'',
            //用户分数
            score:4,
-           shops:[]
+           //商品分类详情
+           shops:[],
+           //商品数量
+           value:1,
+           //
+           buyCount:0
        }
    },
    computed:{
@@ -235,13 +245,27 @@ export default {
             var that=this;
             this.$axios.get('biz/queryFoodinfoByShopIdAndFoodCategoryId?shopId='+id+'&foodcategoryId='+sid)
             .then(function(res){
-                console.log(res.data);
+                // console.log(res.data);
                 that.shops=res.data;
+                // console.log(that.shops)
             })
         },
         //获取详细商品
         dtl(){
-             this.details(this.id,this.tid)//获取到的为第一个？？？
+             this.details(this.id,this.tid);
+        },
+        //商品点击时，获取全部数据
+        bb(data){
+            console.log(data);
+        },
+        //加减
+        shopCount(index,event){
+            if(event.target.dataset.a==='+'){
+                // 获取下标
+                this.buyCount++
+            }
+            console.log(index)
+            this.shops[index].shopCount
         }
    }
 }
