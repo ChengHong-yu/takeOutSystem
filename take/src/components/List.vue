@@ -144,7 +144,7 @@
 </template>
 
 <script>
-import {mapState} from 'vuex'
+import {mapMutations, mapState} from 'vuex'
 export default {
     props:['id'],
    data:function(){
@@ -168,16 +168,17 @@ export default {
        }
    },
    computed:{
-       ...mapState(['tab22'])
+       ...mapState(['tab22','tid'])
    },
    created:function(){
        this.shujv(this.id);
        this.fenlei(this.id);
        this.youhui(this.id);
        this.evaluate(this.id);
-       
+       this.details(this.id,this.tid);
    }, 
    methods:{
+       ...mapMutations(['mutationTid']),
        //获取评价信息
        evaluate(id){
            var that=this;
