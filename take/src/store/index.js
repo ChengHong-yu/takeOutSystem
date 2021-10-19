@@ -18,7 +18,7 @@ const store = new Vuex.Store({
             {id:3,name:'商家'}
         ],
         tid:0,
-        sCount:0
+        sCount:0//商品数量
 
     },
     getters: {},

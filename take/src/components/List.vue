@@ -29,11 +29,9 @@
                                     <img :src="'http://47.95.13.193:80/takeOutSystem-1.0-SNAPSHOT/'+s.photo">
                                     <a><b>{{s.name}}</b></a>
                                     <div>
-                                      
-                                            <button><a data-a='-'>-</a></button>
-                                            <!-- <button @click='shopCount($event)'><a data-a='-'>-</a></button> -->
-                                            <span></span>
-                                       
+                                        <button><a data-a='-'>-</a></button>
+                                        <!-- <button @click='shopCount($event)'><a data-a='-'>-</a></button> -->
+                                        <!-- <span>{{s.count}}</span> -->
                                         <button @click.prevent='shopCount(s.id,$event)'><a data-a='+'>+</a></button>
                                     </div>
                                     <!-- <van-stepper v-model="value" theme="round" button-size="22" disable-input /> -->
@@ -181,19 +179,17 @@ export default {
        }
    },
    computed:{
-       ...mapState(['tab22','tid'])
+       ...mapState(['tab22','tid','sCount'])
    },
    created:function(){
        this.shujv(this.id);
        this.fenlei(this.id);
        this.youhui(this.id);
        this.evaluate(this.id);
-       this.details(this.id,this.tid);
-         
+       this.details(this.id,this.tid);   
    }, 
-
    methods:{
-       ...mapMutations(['mutationTid']),
+       ...mapMutations(['mutationTid','mutationsCount']),
        //获取评价信息
        evaluate(id){
            var that=this;
@@ -252,6 +248,9 @@ export default {
             .then(function(res){
                 // console.log(res.data);
                 that.shops=res.data;
+                for(var a=0;a<that.shops.length;a++){
+                    that.$set(that.shops[a],'count',0);
+                }
                 // console.log(that.shops)
             })
         },
@@ -264,25 +263,28 @@ export default {
             // console.log(data);
         },
         //加减
-        shopCount(id){    
-            
+        shopCount(id,e){  
            for(var i=0;i<this.shops.length;i++){
-                     
                 if(this.shops[i].id==id){
-                    this.$set(this.shops[i],'count',1)
-                  
-                    var obj={
-                        name:this.shops[i].name,
-                        count:this.shops[i].count,
-                        id:this.shops[i].id
-                    }   
-                    this.news.push(obj) 
-                }
-                             
+                    console.log(this.shops[i]);
+                    console.log(this.shops[i].id);
+                    console.log(this.shops[i].count);
+                    console.log(typeof this.shops[i])
+                    this.shops[i].count++;
+                    // if(!this.shops[i].count){
+                    //     this.$set(this.shops[i],'count',1);
+                    //      console.log(this.shops[i].count);
+                    // }else{
+                    //      console.log(11111);
+                    //     // var b=this.shops[i].count;
+                    //     // this.shops[i].count=b+1;
+                    //     // console.log(typeof this.shops[i].count);//number
+                    //     // console.log(this.shops[i]);
+                    // }
+                    
+                }                
            }
-          console.log(this.news)
-        
-        
+        // console.log(this.shops);
         }
    }
 }
