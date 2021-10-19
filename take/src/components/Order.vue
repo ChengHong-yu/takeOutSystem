@@ -56,7 +56,7 @@ export default {
     computed:{
         ...mapState(['isLogined','loginname','tabs'])
     },
-    methods:{
+    methods:{ 
         //删除订单
         delButton(sid){
             var that=this;
