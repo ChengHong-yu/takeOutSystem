@@ -264,7 +264,7 @@ export default {
             // console.log(data);
         },
         //加减
-        shopCount(id,event){    
+        shopCount(id){    
             
            for(var i=0;i<this.shops.length;i++){
                      
@@ -276,7 +276,7 @@ export default {
                         count:this.shops[i].count,
                         id:this.shops[i].id
                     }   
-                    this.news.push(obj)
+                    this.news.push(obj) 
                 }
                              
            }
