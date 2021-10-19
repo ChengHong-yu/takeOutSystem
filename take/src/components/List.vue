@@ -29,11 +29,12 @@
                                     <img :src="'http://47.95.13.193:80/takeOutSystem-1.0-SNAPSHOT/'+s.photo">
                                     <a><b>{{s.name}}</b></a>
                                     <div>
-                                        <!-- <span v-if=''>
-                                            <button @click='shopCount($event)'><a data-a='-'>-</a></button>
-                                            <span>{{buyCount}}</span>
-                                        </span> -->
-                                        <button @click='shopCount(s.id,$event)'><a data-a='+'>+</a></button>
+                                      
+                                            <button><a data-a='-'>-</a></button>
+                                            <!-- <button @click='shopCount($event)'><a data-a='-'>-</a></button> -->
+                                            <span></span>
+                                       
+                                        <button @click.prevent='shopCount(s.id,$event)'><a data-a='+'>+</a></button>
                                     </div>
                                     <!-- <van-stepper v-model="value" theme="round" button-size="22" disable-input /> -->
                                 </li>
@@ -174,7 +175,9 @@ export default {
            //商品数量
            value:1,
            //
-           buyCount:0
+           buyCount:0,
+           //
+           news:[]
        }
    },
    computed:{
@@ -186,16 +189,18 @@ export default {
        this.youhui(this.id);
        this.evaluate(this.id);
        this.details(this.id,this.tid);
+         
    }, 
+
    methods:{
        ...mapMutations(['mutationTid']),
        //获取评价信息
        evaluate(id){
            var that=this;
            this.$axios.get('/biz//queryCommentByShopId?shopId='+id).then(function(res){
-               console.log(res.data);
+            //    console.log(res.data);
             that.evaluates=res.data;
-            console.log(res.data.score);
+            // console.log(res.data.score);
             // that.score=splice(res.data.score,1);
            })
        },
@@ -256,16 +261,28 @@ export default {
         },
         //商品点击时，获取全部数据
         bb(data){
-            console.log(data);
+            // console.log(data);
         },
         //加减
-        shopCount(index,event){
-            if(event.target.dataset.a==='+'){
-                // 获取下标
-                this.buyCount++
-            }
-            console.log(index)
-            this.shops[index].shopCount
+        shopCount(id,event){    
+            
+           for(var i=0;i<this.shops.length;i++){
+                     
+                if(this.shops[i].id==id){
+                    this.$set(this.shops[i],'count',1)
+                  
+                    var obj={
+                        name:this.shops[i].name,
+                        count:this.shops[i].count,
+                        id:this.shops[i].id
+                    }   
+                    this.news.push(obj)
+                }
+                             
+           }
+          console.log(this.news)
+        
+        
         }
    }
 }

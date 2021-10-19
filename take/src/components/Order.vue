@@ -60,12 +60,18 @@ export default {
         //删除订单
         delButton(sid){
             var that=this;
-            if(confirm('您确定要删除此订单吗？')){
-                this.$axios.get('/biz/deleteOrderByOid?orderId='+sid).then(function(res){
-                    // console.log(res);
+            this.$dialog.confirm({
+                title: '删除',
+                message: '确认删除该订单吗',
+                })
+            .then(() => {
+               this.$axios.get('/biz/deleteOrderByOid?orderId='+sid).then(function(res){
+            //         // console.log(res);
                     that.$router.go(0);
                 })
-            }
+             })
+            .catch(() => {
+            });
         }
     },
     created:function(){
@@ -83,7 +89,6 @@ export default {
 <style scoped>
 
 .delbtn{
-    /* float: right; */
  margin: 10px 0;
   position: relative;
   left: 84%;
