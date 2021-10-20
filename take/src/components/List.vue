@@ -248,9 +248,9 @@ export default {
             .then(function(res){
                 // console.log(res.data);
                 that.shops=res.data;
-                for(var a=0;a<that.shops.length;a++){
-                    that.$set(that.shops[a],'count',0);
-                }
+                // for(var a=0;a<that.shops.length;a++){
+                //     that.$set(that.shops[a],'count',0);
+                // }
                 // console.log(that.shops)
             })
         },
@@ -266,11 +266,29 @@ export default {
         shopCount(id,e){  
            for(var i=0;i<this.shops.length;i++){
                 if(this.shops[i].id==id){
-                    console.log(this.shops[i]);
-                    console.log(this.shops[i].id);
-                    console.log(this.shops[i].count);
-                    console.log(typeof this.shops[i])
-                    this.shops[i].count++;
+                    if(this.news.length==0){
+                        let addItem={
+                            id:this.shops[i].id,
+                            count:1};
+                            this.news.push(addItem);
+                    }else{
+                        for(var a=0;a<this.news.length;a++){
+                            if(this.news[a].id!==id){
+                                let addItem={
+                                id:this.shops[i].id,
+                                count:1};
+                                this.news.push(addItem);
+                            }else{
+                                this.news[a].count+=1;
+                            }
+                        }
+                    }
+                    
+                    // console.log(this.shops[i]);
+                    // console.log(this.shops[i].id);
+                    // console.log(this.shops[i].count);
+                    // console.log(typeof this.shops[i])
+                    // // this.shops[i].count++;
                     // if(!this.shops[i].count){
                     //     this.$set(this.shops[i],'count',1);
                     //      console.log(this.shops[i].count);
@@ -285,6 +303,7 @@ export default {
                 }                
            }
         // console.log(this.shops);
+        console.log(this.news);
         }
    }
 }
