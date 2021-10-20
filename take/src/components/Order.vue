@@ -80,8 +80,8 @@ export default {
         var that=this;
         //获取用户全部订单
         this.$axios.get('/biz/queryOrdersByUserId?userId='+id).then(function(res){
-            console.log(res.data);
-            that.shops=res.data;
+            // console.log(res.data);
+            that.shops=res.data.reverse();
         })
     }
 }

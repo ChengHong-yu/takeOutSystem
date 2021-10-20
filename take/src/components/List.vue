@@ -22,27 +22,63 @@
             <van-tab v-for="(item,index) in tab22" :title="item.name" :key='index'>
                 <div v-if='index==0' class="shopAll">
                     <!-- 分类 -->
-                    <van-tree-select :items="fenLei" height="100%" :main-active-index.sync="active" @click-nav='aa'  @click.native='dtl'>
+                    <van-tree-select :items="fenLei" height='600px' :main-active-index.sync="active" @click-nav='aa'  @click.native='dtl'>
                         <template #content >
                             <ul >
-                                <li v-for='(s,i) in shops' :key='i'  @click='bb(s.id)'>
-                                    <img :src="'http://47.95.13.193:80/takeOutSystem-1.0-SNAPSHOT/'+s.photo">
-                                    <a><b>{{s.name}}</b></a>
-                                    <div>
-                                        <button><a data-a='-'>-</a></button>
-                                        <!-- <button @click='shopCount($event)'><a data-a='-'>-</a></button> -->
-                                        <!-- <span>{{s.count}}</span> -->
-                                        <button @click.prevent='shopCount(s.id,$event)'><a data-a='+'>+</a></button>
-                                    </div>
-                                    <!-- <van-stepper v-model="value" theme="round" button-size="22" disable-input /> -->
+                                <li v-for='(s,i) in shops' :key='i'>
+                                    <van-card
+                                      :desc="s.info"
+                                      :title="s.name"
+                                      :thumb="'http://47.95.13.193:80/takeOutSystem-1.0-SNAPSHOT/'+s.photo"
+                                    >
+                                        <template #num>
+                                        <van-button icon="plus" size='small' color="#F11727" type="primary" @click.prevent='shopCount(s.id,$event)'/>
+                                        </template>
+                                    </van-card>
                                 </li>
                             </ul>
                         </template>
                     </van-tree-select>
-                    <div class='shopCar'>
+                    <div class=''>
                         <div>
-                            <button>购物车</button>
-                            <button @click="jieSuan()">结算</button>
+                            <!-- 弹出层 -->
+                            <!-- <div  class="tanchu"> -->
+                                <van-popup v-model="show" round position="bottom" :style="{ height: '30%' }" >
+                                      <div style="overflow:hidden"><van-icon size='25px' style=" float:right;margin:5px 30px 0 0" name="delete" @click.native="del()"/></div>
+                                <div class="van-hairline--bottom"></div>
+                                <ul >
+                                    <li v-for="z in news" :key="z.foodId">
+                                               <van-card
+                                      :desc="z.info"
+                                      :title="z.name"
+                                      :thumb="'http://47.95.13.193:80/takeOutSystem-1.0-SNAPSHOT/'+z.photo"
+                                    >
+                                        <template #num>
+                                                    <button @click.prevent='shopJian(z.foodId)'>-</button>
+                                            {{z.buyCount}}
+                                            <button @click.prevent='shopCount(z.foodId)'>+</button>
+                                        </template>
+                                    </van-card>
+                                    </li>
+                                </ul>
+                                </van-popup>
+                                <div class="bottom-z">
+                                      <!-- <div style="position:relative; z-index:99;"  @click.prevent="qiehuan">购物车</div>  -->
+                                    <!-- <van-submit-bar  button-text="提交订单" @click.native='tijiao()' >                               
+                                    </van-submit-bar>  -->
+                                 <van-goods-action>
+                                  
+                                  <van-goods-action-icon icon="cart-o" text="购物车" @click="qiehuan" />
+                                
+                                  <van-goods-action-button
+                                    type="danger"
+                                    text="立即购买"
+                                    @click="tijiao()"
+                                  />
+                                </van-goods-action>
+                                </div>
+    
+                                
                         </div>
                     </div>
                 </div>
@@ -144,6 +180,9 @@
                     </div>
             </van-tab>
         </van-tabs>
+        
+      
+        
     </div>
 </template>
 
@@ -171,15 +210,15 @@ export default {
            //商品分类详情
            shops:[],
            //商品数量
-           value:1,
-           //
-           buyCount:0,
-           //
-           news:[]
+           news:[],
+           //弹出层显示
+           show:false,
+           //切换z
+           z:false
        }
    },
    computed:{
-       ...mapState(['tab22','tid','sCount'])
+       ...mapState(['tab22','tid','sCount','isLogined'])
    },
    created:function(){
        this.shujv(this.id);
@@ -226,7 +265,6 @@ export default {
                 }
                 // console.log(he);
                that.fenLei=he;
-
            })
         },
         // 商家优惠信息
@@ -248,67 +286,119 @@ export default {
             .then(function(res){
                 // console.log(res.data);
                 that.shops=res.data;
-                // for(var a=0;a<that.shops.length;a++){
-                //     that.$set(that.shops[a],'count',0);
-                // }
-                // console.log(that.shops)
             })
         },
         //获取详细商品
         dtl(){
              this.details(this.id,this.tid);
         },
-        //商品点击时，获取全部数据
-        bb(data){
-            // console.log(data);
-        },
-        //加减
-        shopCount(id,e){  
-           for(var i=0;i<this.shops.length;i++){
-                if(this.shops[i].id==id){
-                    if(this.news.length==0){
+        //进行商品数量的添加与删减
+        shopCount(id,e){   
+           if(!this.isLogined){
+               this.$toast({
+                   message:'请先登录！'
+               })
+           }else{
+               for(var i=0;i<this.shops.length;i++){
+                if(this.shops[i].id==id){//点击的id与商品的id保持一致
+                    if(this.news.length==0){//新建的数组无商品时，添加商品
                         let addItem={
-                            id:this.shops[i].id,
-                            count:1};
+                            name:this.shops[i].name,
+                            photo:this.shops[i].photo,
+                            foodId:this.shops[i].id,
+                            buyCount:1
+                        };
+                        this.news.push(addItem);
+                        return;
+                    }else{//新建数组存在商品，则进行商品数量添加
+                        //flag:若新建数组里面的商品id与点击的id不一致时，返回true，进行商品添加
+                        //     若数组id与点击的id一致，返回false，则进行商品数量添加
+                        let flag=this.news.every(value=>value.foodId!=this.shops[i].id);
+                        if(flag){//true表示点击的id与数组id不一致
+                            let addItem={
+                                name:this.shops[i].name,
+                                photo:this.shops[i].photo,
+                                foodId:this.shops[i].id,
+                                buyCount:1
+                            };
                             this.news.push(addItem);
-                    }else{
-                        for(var a=0;a<this.news.length;a++){
-                            if(this.news[a].id!==id){
-                                let addItem={
-                                id:this.shops[i].id,
-                                count:1};
-                                this.news.push(addItem);
-                            }else{
-                                this.news[a].count+=1;
+                            return;
+                        }else{//flag=false
+                            for(var a=0;a<this.news.length;a++){
+                                if(this.news[a].foodId==this.shops[i].id){//找到数组对应的id
+                                    // console.log(this.news[a].count);
+                                    this.news[a].buyCount+=1;
+                                }
                             }
                         }
                     }
-                    
-                    // console.log(this.shops[i]);
-                    // console.log(this.shops[i].id);
-                    // console.log(this.shops[i].count);
-                    // console.log(typeof this.shops[i])
-                    // // this.shops[i].count++;
-                    // if(!this.shops[i].count){
-                    //     this.$set(this.shops[i],'count',1);
-                    //      console.log(this.shops[i].count);
-                    // }else{
-                    //      console.log(11111);
-                    //     // var b=this.shops[i].count;
-                    //     // this.shops[i].count=b+1;
-                    //     // console.log(typeof this.shops[i].count);//number
-                    //     // console.log(this.shops[i]);
-                    // }
-                    
                 }                
+            }
            }
-        // console.log(this.shops);
-        console.log(this.news);
+            // console.log(this.news);
+        },
+        //弹出层显示隐藏
+        qiehuan(){
+            // var z=document.getElementsByClassName('tanchu')[0];
+            // console.log(z)
+            this.show=true
+            
+        },
+        //商品数量减少
+        shopJian(id){
+            for(var i=0;i<this.shops.length;i++){
+                if(this.shops[i].id==id){//点击的id与商品的id保持一致
+                    let flag=this.news.every(value=>value.foodId!=this.shops[i].id);
+                    if(!flag){//true表示点击的id与数组id不一致
+                        for(var a=0;a<this.news.length;a++){
+                            if(this.news[a].foodId==this.shops[i].id){//找到数组对应的id
+                                // console.log(this.news[a].count);
+                                if(this.news[a].buyCount==1){
+                                    this.news.splice(a,1);
+                                    return;
+                                }else{
+                                     this.news[a].buyCount-=1;
+                                }
+                               
+                            }
+                        }
+                    }
+                }                
+            }
+            // console.log(this.news);
+        },
+        // //发送订单
+        // @click.native='tijiao()
+        tijiao(){
+            var arr=[];
+            for(var i=0;i<this.news.length;i++){
+                delete this.news[i].photo;
+                delete this.news[i].name;
+                arr=this.news;
+            }
+            var that=this;
+            this.$axios.post('/biz/insertOrder',{
+                'userId':window.sessionStorage.getItem('loginid'),
+                'shopId':this.id,
+                'list':arr
+            }).then(function(res){
+                that.$router.push('/order');
+            })
+        },
+        //删除商品订单
+        del(){
+            this.news=[]
         }
-   }
+
+    }
 }
 </script>
 <style scoped>
+.cart{
+    position:relative;
+    z-index: 99;
+   
+}
 #zsz {
    background:url('https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2F7%2F584260a8b8615.jpg%3Fdown&refer=http%3A%2F%2Fpic1.win4000.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1636963117&t=ebea508b9443995cd2708154d7dd4478/assets/logo.png') no-repeat ;
 }
@@ -411,4 +501,6 @@ img{
     background-color: rgb(110, 109, 109);
     border-radius: 10px;
 }
+
+
 </style>

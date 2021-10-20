@@ -62,7 +62,7 @@ export default {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    color: #f88323;
+    color: #1989FA;
 }
 .van-button{
     margin-top: 10%;
